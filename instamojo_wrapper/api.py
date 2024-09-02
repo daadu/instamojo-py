@@ -228,7 +228,8 @@ class Instamojo(object):
         send_sms=False,
         redirect_url=None,
         webhook=None,
-        allow_repeated_payments=True
+        allow_repeated_payments=True,
+        expires_at=None,
     ):
         """
         Create a Payment Request
@@ -261,6 +262,8 @@ class Instamojo(object):
             To disallow multiple successful payments on a Payment Request pass false for this field.
             If this is set to false then the link is not accessible publicly after first successful
             payment, though you can still access it using API(default value: True).
+        expires_at: str, optional
+            Time after which the payment request will be expired in ISO format. Max value is 600 seconds. Default is Null.
 
         Returns
         _______
@@ -287,7 +290,8 @@ class Instamojo(object):
             send_sms=send_sms,
             redirect_url=redirect_url,
             webhook=webhook,
-            allow_repeated_payments=allow_repeated_payments
+            allow_repeated_payments=allow_repeated_payments,
+            expires_at=expires_at
         )
         response = self._api_call(method='post', path='payment-requests/', **payment_request_data)
         return response
